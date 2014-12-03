@@ -14,10 +14,16 @@ class DatabaseSeeder extends Seeder {
 		//$this->call('QuestionTableSeeder');
 
         DB::table('questions')->delete();
+        DB::table('users')->delete();
 
         $question = Question::create(array(
             'title' => 'test1',
             'fulltext' => 'test2'
+        ));
+
+        $user = User::create(array(
+            'username' => 'max',
+            'password' => Hash::make('my_pass')
         ));
 	}
 

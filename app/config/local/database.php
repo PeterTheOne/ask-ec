@@ -23,6 +23,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost:3306',
+            //'port'      => '3306',
 			'database'  => 'askec',
 			'username'  => 'root',
 			'password'  => '',

@@ -9,4 +9,6 @@ class Question extends Eloquent {
 	 */
 	protected $table = 'questions';
 
+    protected $fillable = array('title', 'fulltext');
+
 }
