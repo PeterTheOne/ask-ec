@@ -11,6 +11,7 @@
         <div>
             <h1>{{ $question->title }}</h1>
             <p>{{ $question->fulltext }}</p>
+            <a href="#">vote</a>
         </div>
         @endforeach
     </div>

@@ -39,21 +39,23 @@ Route::get('/question/{id}', function($id)
 
 Route::get('/top', function()
 {
-    $questions = Question::leftJoin('votes', 'questions.id', '=', 'votes.user_id')
-        ->orderByRaw('COALESCE(votes.user_id, questions.id) ASC')
-        ->select('questions.*')
-        ->get();
+    $questions = Question::with('voters')->get();
+    foreach ($questions as $question) {
+        $question->voteCount = $question->voters()->count();
+    }
+    $questions->sortBy('voteCount', SORT_REGULAR, true);
     return View::make('list', array('questions' => $questions));
 });
 
 Route::get('/hot', function()
 {
-
-    $questions = Question::leftJoin('votes', 'questions.id', '=', 'votes.user_id')
+    $questions = Question::with('voters')
         ->where('questions.created_at', '>', Carbon::now()->subWeek())
-        ->orderByRaw('COALESCE(votes.user_id, questions.id) ASC')
-        ->select('questions.*')
         ->get();
+    foreach ($questions as $question) {
+        $question->voteCount = $question->voters()->count();
+    }
+    $questions->sortBy('voteCount', SORT_REGULAR, true);
     return View::make('list', array('questions' => $questions));
 });
 
