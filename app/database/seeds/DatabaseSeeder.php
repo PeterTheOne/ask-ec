@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder {
 
         DB::table('questions')->delete();
         DB::table('users')->delete();
+        DB::table('votes')->delete();
 
         $question = Question::create(array(
             'title' => 'test1',
@@ -25,6 +26,8 @@ class DatabaseSeeder extends Seeder {
             'username' => 'max',
             'password' => Hash::make('my_pass')
         ));
+
+        $user->votedQuestions()->attach($question->id);
 	}
 
 }

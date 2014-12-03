@@ -11,4 +11,8 @@ class Question extends Eloquent {
 
     protected $fillable = array('title', 'fulltext');
 
+    public function voters() {
+        return $this->belongsToMany('User', 'votes', 'question_id', 'user_id');
+    }
+
 }
