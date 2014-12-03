@@ -37,6 +37,20 @@ Route::get('/question/{id}', function($id)
     return $question;
 });
 
+Route::post('/question/{id}/vote', function($id)
+{
+    $question = Question::find($id);
+    $user = Auth::user();
+
+    if (!$question->voters->contains($user->id)) {
+        $question->voters()->attach($user);
+        return array('action' => 'attached', 'voteCount' => $question->voters()->count());
+    } else {
+        $question->voters()->detach($user);
+        return array('action' => 'detached', 'voteCount' => $question->voters()->count());
+    }
+})->before('auth');
+
 Route::get('/top', function()
 {
     $questions = Question::with('voters')->get();
